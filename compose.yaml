@@ -1,0 +1,41 @@
+services:
+
+  mongodb:
+    image: 'mongodb/mongodb-community-server:6.0-ubi8'
+    container_name: mongodb
+    environment:
+      - 'MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}'
+      - 'MONGO_INITDB_ROOT_USERNAME=${DB_USER}'
+    ports:
+      - '27017:27017'
+    volumes:
+      - majestic_db:/data/db
+    networks:
+      - majestic_net
+    restart: always
+
+
+  app:
+    container_name: majestic_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:8080"
+    depends_on:
+      - mongodb
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    networks:
+      - majestic_net
+
+
+networks:
+  majestic_net:
+    driver: bridge
+
+volumes:
+  majestic_db:
+    driver: local
