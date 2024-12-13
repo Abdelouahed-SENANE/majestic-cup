@@ -2,7 +2,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://root:password@mongodb:27017/test_db?authSource=admin
+      uri: mongodb://root:password@mongodb:27017/majestic_db?authSource=admin
   docker:
     compose:
       enabled: true

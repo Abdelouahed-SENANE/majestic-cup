@@ -7,6 +7,8 @@ import ma.youcode.majesticcup.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
@@ -18,5 +20,10 @@ public class UserServiceImp implements UserService {
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> readAll() {
+        return userRepository.findAll();
     }
 }

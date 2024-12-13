@@ -25,6 +25,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: majestic
     ports:
       - $LOCAL_PORT:$DOCKER_PORT
     restart: on-failure
