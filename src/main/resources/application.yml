@@ -1,0 +1,19 @@
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:password@mongodb:27017/test_db?authSource=admin
+  docker:
+    compose:
+      enabled: true
+      file: compose.yaml
+  security:
+    user:
+      name: user
+      password: user
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
