@@ -1,5 +1,6 @@
-
 spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   data:
     mongodb:
       uri: mongodb://root:password@mongodb:27017/majestic_db?authSource=admin
@@ -11,9 +12,23 @@ spring:
     user:
       name: user
       password: user
+    jwt:
+      secret_key: eis6WvOzbsNWpqowjXlDo/e4MEQRbywE+z9LT5tpmG4=
+      expiration: 3600000
+
 
 logging:
   level:
     org:
       springframework:
         security: DEBUG
+        web: DEBUG
+    ma:
+      youcode:
+        majesticcup:
+          middlewares:
+            JwtAuthFilter: DEBUG
+
+
+server:
+  port: 8080

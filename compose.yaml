@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
     image: majestic
     ports:
-      - $LOCAL_PORT:$DOCKER_PORT
+      - "8080:8080"
     restart: on-failure
     command: '/bin/bash -c "sleep 5; mongosh $$CONN_STR --eval \"show dbs;\""'
     depends_on:
