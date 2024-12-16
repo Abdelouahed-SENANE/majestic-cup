@@ -12,23 +12,17 @@ spring:
     user:
       name: user
       password: user
-    jwt:
-      secret_key: eis6WvOzbsNWpqowjXlDo/e4MEQRbywE+z9LT5tpmG4=
-      expiration: 3600000
 
 
 logging:
   level:
     org:
       springframework:
-        security: DEBUG
-        web: DEBUG
+        security: TRACE
+
     ma:
       youcode:
         majesticcup:
           middlewares:
             JwtAuthFilter: DEBUG
 
-
-server:
-  port: 8080

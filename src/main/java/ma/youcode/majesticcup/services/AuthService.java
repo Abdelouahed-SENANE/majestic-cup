@@ -7,8 +7,8 @@ import ma.youcode.majesticcup.entities.User;
 
 public interface AuthService {
 
-    LoginResponseDTO authenticate(LoginRequestDTO userDTO);
-    LoginResponseDTO signup(UserRequestDTO userDTO);
+    LoginResponseDTO login(LoginRequestDTO userDTO);
+    LoginResponseDTO register(UserRequestDTO userDTO);
     void logout(String jwtToken);
 
 

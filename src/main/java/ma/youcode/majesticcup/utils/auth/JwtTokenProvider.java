@@ -21,7 +21,6 @@ public class JwtTokenProvider {
     private static final long JWT_EXP = 3600000L;
     private static final String SECRET_KEY = "eis6WvOzbsNWpqowjXlDo/e4MEQRbywE+z9LT5tpmG4=";
 
-
     public boolean isTokenValid(String token , UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);

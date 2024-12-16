@@ -19,23 +19,17 @@ import static ma.senane.utilities.response.Response.success;
 @RequestMapping("api/auth")
 public class AuthController {
 
-    private static final Logger log = LogManager.getLogger(AuthController.class);
     private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<SuccessDTO> handleRegister(@RequestBody UserRequestDTO registerDTO) {
-        log.info("Received request to register user {}" , registerDTO.toString());
-        LoginResponseDTO resDTO = authService.signup(registerDTO);
+        LoginResponseDTO resDTO = authService.register(registerDTO);
         return success(HttpServletResponse.SC_CREATED, "Registered successfully." , "jwt" , resDTO);
     }
 
-    @GetMapping("/hello")
-    public String handleHello() {
-        return "Hello World!";
-    }
     @PostMapping("/login")
     public ResponseEntity<SuccessDTO> handleLogin(@RequestBody LoginRequestDTO loginDTO) {
-        LoginResponseDTO resDTO = authService.authenticate(loginDTO);
+        LoginResponseDTO resDTO = authService.login(loginDTO);
         return success(HttpServletResponse.SC_CREATED, "Logged successfully." , "jwt" , resDTO);
     }
 

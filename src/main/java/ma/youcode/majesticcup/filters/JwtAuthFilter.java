@@ -1,4 +1,4 @@
-package ma.youcode.majesticcup.middlewares;
+package ma.youcode.majesticcup.filters;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import ma.youcode.majesticcup.utils.auth.JwtTokenProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,16 +36,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             final String token = extractToken(request);
-
             final String username = jwtTokenProvider.extractUsername(token);
-            logger.debug("Token verified" + token);
 
             if (token != null && jwtTokenProvider.verifyToken(token)) {
                 authUserProcess(request , token , username);
             }
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            logger.debug("Error token" + e.getMessage());
             handlerExceptionResolver.resolveException(request, response, null, e);
         }
     }
@@ -68,7 +64,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }else {
-            logger.warn("Invalid Jwt token for user " + username);
+            throw new IllegalArgumentException("Invalid Jwt token for user " + username);
         }
     }
 }

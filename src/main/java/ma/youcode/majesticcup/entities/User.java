@@ -4,20 +4,22 @@ import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import ma.youcode.majesticcup.utils.enums.RoleName;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Document(collection = "users")
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class User implements Serializable , UserDetails {
     @Id
     private String id;
 
-    @Column(unique = true , nullable = false)
+    @Column(nullable = false)
     private String username;
 
     @Getter
@@ -42,12 +44,15 @@ public class User implements Serializable , UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    private Set<Role> roles;
+    @DBRef
+    private Set<Role> roles = new LinkedHashSet<>();
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(String.valueOf(role)))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -74,4 +79,5 @@ public class User implements Serializable , UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
