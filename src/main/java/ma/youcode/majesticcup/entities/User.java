@@ -1,12 +1,10 @@
 package ma.youcode.majesticcup.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ma.youcode.majesticcup.utils.enums.RoleName;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -45,13 +43,13 @@ public class User implements Serializable , UserDetails {
     private LocalDateTime updatedAt;
 
     @DBRef
-    private Set<Role> roles = new LinkedHashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(String.valueOf(role)))
+                .map(role -> new SimpleGrantedAuthority(String.valueOf(role.getName())))
                 .collect(Collectors.toList());
     }
 

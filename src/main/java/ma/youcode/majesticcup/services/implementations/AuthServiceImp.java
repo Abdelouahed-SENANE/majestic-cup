@@ -14,6 +14,8 @@ import ma.youcode.majesticcup.repositories.UserRepository;
 import ma.youcode.majesticcup.services.AuthService;
 import ma.youcode.majesticcup.utils.auth.JwtTokenProvider;
 import ma.youcode.majesticcup.utils.enums.RoleName;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AuthServiceImp implements AuthService {
 
+    private static final Logger log = LogManager.getLogger(AuthServiceImp.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
@@ -37,25 +41,18 @@ public class AuthServiceImp implements AuthService {
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO dto) {
-        return authenticationProcess(dto.username() , dto.password());
+        return authenticate(dto.username(), dto.password());
     }
 
     private User findByUsername(String username) {
-        User user =  userRepository.findByUsername(username)
+        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
-        // Load the roles properly if they are not resolved
-        Set<Role> roles = user.getRoles().stream()
-                .map(role -> roleRepository.findByName(role.getName())
-                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + role.getName())))
-                .collect(Collectors.toSet());
-
-        user.setRoles(roles);
-        return user;
     }
 
     private boolean isUserExist(String username) {
         return userRepository.findByUsername(username).isPresent();
     }
+
     @Override
     public LoginResponseDTO register(UserRequestDTO dto) {
 
@@ -65,18 +62,23 @@ public class AuthServiceImp implements AuthService {
 
         User user = userMapper.fromRequestDTO(dto);
         user.setPassword(passwordEncoder.encode(dto.password()));
-        user.getRoles().add(getRole(RoleName.ROLE_USER));
+        assignRole(user);
         userRepository.save(user);
-        return authenticationProcess(dto.username(), dto.password());
+        return authenticate(dto.username(), dto.password());
     }
 
-    private Role getRole(RoleName roleName) {
-        return roleRepository.findByName(roleName)
+    private void assignRole(User user) {
+        Role role = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new RoleNotFoundException("Role not found."));
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>());
+        }
+        user.getRoles().add(role);
+
     }
 
-    private LoginResponseDTO authenticationProcess(String username , String password) {
-        authManager.authenticate( new UsernamePasswordAuthenticationToken(username , password) );
+    private LoginResponseDTO authenticate(String username, String password) {
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         User authUser = findByUsername(username);
         String token = jwtTokenProvider.generateToken(authUser);
         long expirationTime = jwtTokenProvider.getExpirationTime();
@@ -85,6 +87,7 @@ public class AuthServiceImp implements AuthService {
 
     @Override
     public void logout(String jwtToken) {
+
     }
 
 

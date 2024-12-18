@@ -17,6 +17,7 @@ public class Role {
 
     @Id
     private String id;
+
     @Enumerated(EnumType.STRING)
     private RoleName name;
 

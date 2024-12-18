@@ -18,11 +18,5 @@ logging:
   level:
     org:
       springframework:
-        security: TRACE
-
-    ma:
-      youcode:
-        majesticcup:
-          middlewares:
-            JwtAuthFilter: DEBUG
+        security: DEBUG
 
