@@ -8,7 +8,7 @@ import ma.youcode.majesticcup.entities.Role;
 import ma.youcode.majesticcup.entities.User;
 import ma.youcode.majesticcup.exceptions.custom.RoleNotFoundException;
 import ma.youcode.majesticcup.exceptions.custom.UserAlreadyExistsException;
-import ma.youcode.majesticcup.mappers.UserMapper;
+import ma.youcode.majesticcup.utils.mappers.UserMapper;
 import ma.youcode.majesticcup.repositories.RoleRepository;
 import ma.youcode.majesticcup.repositories.UserRepository;
 import ma.youcode.majesticcup.services.AuthService;
@@ -21,17 +21,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImp implements AuthService {
+public class AuthServiceImpl implements AuthService {
 
-    private static final Logger log = LogManager.getLogger(AuthServiceImp.class);
+    private static final Logger log = LogManager.getLogger(AuthServiceImpl.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;

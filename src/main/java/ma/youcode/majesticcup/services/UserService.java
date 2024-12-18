@@ -11,5 +11,5 @@ public interface UserService {
 
     UserResponseDTO getMe();
     void editRoles(String username,Set<RoleName> roles);
-    UserResponseDTO editProfile(UserRequestDTO userRequestDTO);
+    UserResponseDTO update(UserRequestDTO userRequestDTO);
 }

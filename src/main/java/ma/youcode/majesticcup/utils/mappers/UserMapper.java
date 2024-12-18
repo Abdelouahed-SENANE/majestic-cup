@@ -1,4 +1,4 @@
-package ma.youcode.majesticcup.mappers;
+package ma.youcode.majesticcup.utils.mappers;
 
 import ma.senane.utilities.mappers.GenericMapper;
 import ma.youcode.majesticcup.dtos.request.UserRequestDTO;

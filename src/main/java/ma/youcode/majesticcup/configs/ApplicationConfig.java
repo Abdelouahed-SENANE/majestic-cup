@@ -38,17 +38,16 @@ public class ApplicationConfig {
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-            UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-                    .username(user.getUsername())
-                    .password(user.getPassword())  // Ensure password is encoded and matches the one stored
-                    .authorities(user.getRoles().stream()
-                            .map(role -> new SimpleGrantedAuthority(String.valueOf(role.getName())))
-                            .collect(Collectors.toList()))
-                    .build();
+//            UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+//                    .username(user.getUsername())
+//                    .password(user.getPassword())
+//                    .authorities(user.getRoles().stream()
+//                            .map(role -> new SimpleGrantedAuthority(String.valueOf(role.getName())))
+//                            .collect(Collectors.toList()))
+//                    .build();
 
-            System.out.println("hhhhhhhhhhhhhh " +userDetails.getAuthorities());
 
-            return userDetails;
+            return user;
         };
     }
 

@@ -2,6 +2,8 @@ package ma.youcode.majesticcup.exceptions;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import ma.senane.utilities.dtos.ErrorDTO;
+import ma.senane.utilities.exceptions.AbstractGlobalHandlerException;
+import ma.youcode.majesticcup.exceptions.custom.TeamSizePlayersException;
 import ma.youcode.majesticcup.exceptions.custom.UserAlreadyExistsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,14 +21,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import static ma.senane.utilities.response.Response.error;
 
 @RestControllerAdvice
-public class GlobalHandlerException {
+public class GlobalHandlerException extends AbstractGlobalHandlerException {
 
     private static final Logger log = LogManager.getLogger(GlobalHandlerException.class);
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorDTO> handleUnknownException(Exception e) {
-//        return error(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
-//    }
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<ErrorDTO> handleExpiredJwtException(ExpiredJwtException e) {
         return error(HttpStatus.UNAUTHORIZED.value(), "The JWT token has expired.");
@@ -49,5 +47,9 @@ public class GlobalHandlerException {
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorDTO> handleIUsernameNotFoundException(UsernameNotFoundException e) {
         return error(HttpStatus.NOT_FOUND.value(), e.getMessage());
+    }
+    @ExceptionHandler(TeamSizePlayersException.class)
+    public ResponseEntity<ErrorDTO> handleTeamSizePlayersException(TeamSizePlayersException e) {
+        return error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 }
