@@ -1,31 +1,53 @@
 package ma.youcode.majesticcup.services.implementations;
 
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityNotFoundException;
 import ma.youcode.majesticcup.dtos.request.PlayerRequestDTO;
 import ma.youcode.majesticcup.dtos.response.PlayerResponseDTO;
 import ma.youcode.majesticcup.entities.Player;
+import ma.youcode.majesticcup.entities.Team;
 import ma.youcode.majesticcup.repositories.PlayerRepository;
 import ma.youcode.majesticcup.services.PlayerService;
+import ma.youcode.majesticcup.services.TeamService;
 import ma.youcode.majesticcup.utils.mappers.PlayerMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
-public class PlayerServiceImpl implements PlayerService {
+public class PlayerServiceImpl extends GenericServiceImpl<Player, PlayerResponseDTO , PlayerRequestDTO> implements PlayerService  {
 
     private final PlayerRepository playerRepository;
     private final PlayerMapper playerMapper;
-
-    @Override
-    public PlayerResponseDTO edit(PlayerRequestDTO dto) {
-        return null;
+    private final TeamService teamService;
+    public PlayerServiceImpl(PlayerRepository playerRepository, PlayerMapper playerMapper, TeamService teamService) {
+        super(playerRepository, playerMapper , Player.class);
+        this.playerRepository = playerRepository;
+        this.playerMapper = playerMapper;
+        this.teamService = teamService;
     }
 
     @Override
-    public void delete(PlayerRequestDTO dto) {
+    public PlayerResponseDTO update(String id,PlayerRequestDTO dto) {
 
+        Player existPlayer = getById(id);
+
+        if (dto.name() != null && !dto.name().isBlank()) {
+            existPlayer.setName(dto.name());
+        }
+
+        if (dto.position() != null && !dto.position().isBlank()) {
+            existPlayer.setPosition(dto.name());
+        }
+
+        if (dto.surname() != null && !dto.surname().isBlank()) {
+            existPlayer.setSurname(dto.name());
+        }
+        if (dto.number() != null) {
+            existPlayer.setNumber(dto.number());
+        }
+
+        return playerMapper.toResponseDTO(playerRepository.save(existPlayer));
     }
 
     @Override
@@ -35,8 +57,18 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public List<Player> createAll(List<PlayerRequestDTO> dto) {
+    public List<PlayerResponseDTO> createAll(List<PlayerRequestDTO> dto) {
         List<Player> players = playerMapper.fromRequestDTOs(dto);
-        return playerRepository.saveAll(players);
+        return playerMapper.toResponseDTOs(playerRepository.saveAll(players));
+    }
+
+
+
+    @Override
+    public List<Player> findAll(List<String> ids) {
+        return ids.stream()
+                .map(id -> playerRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("Player with id " + id + " not found.")))
+                .collect(Collectors.toList());
     }
 }

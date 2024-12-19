@@ -34,21 +34,9 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
-            User user = userRepository.findByUsername(username)
+        return username -> userRepository.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-//            UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-//                    .username(user.getUsername())
-//                    .password(user.getPassword())
-//                    .authorities(user.getRoles().stream()
-//                            .map(role -> new SimpleGrantedAuthority(String.valueOf(role.getName())))
-//                            .collect(Collectors.toList()))
-//                    .build();
-
-
-            return user;
-        };
     }
 
     @Bean

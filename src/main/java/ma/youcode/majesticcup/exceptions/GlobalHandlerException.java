@@ -3,6 +3,7 @@ package ma.youcode.majesticcup.exceptions;
 import io.jsonwebtoken.ExpiredJwtException;
 import ma.senane.utilities.dtos.ErrorDTO;
 import ma.senane.utilities.exceptions.AbstractGlobalHandlerException;
+import ma.youcode.majesticcup.exceptions.custom.NoContentException;
 import ma.youcode.majesticcup.exceptions.custom.TeamSizePlayersException;
 import ma.youcode.majesticcup.exceptions.custom.UserAlreadyExistsException;
 import org.apache.logging.log4j.LogManager;
@@ -51,5 +52,10 @@ public class GlobalHandlerException extends AbstractGlobalHandlerException {
     @ExceptionHandler(TeamSizePlayersException.class)
     public ResponseEntity<ErrorDTO> handleTeamSizePlayersException(TeamSizePlayersException e) {
         return error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
+
+    @ExceptionHandler(NoContentException.class)
+    public ResponseEntity<ErrorDTO> handleNoContentException(NoContentException e) {
+        return error(HttpStatus.NOT_FOUND.value(), e.getMessage());
     }
 }

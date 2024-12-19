@@ -7,26 +7,33 @@ import ma.youcode.majesticcup.dtos.request.TeamRequestDTO;
 import ma.youcode.majesticcup.dtos.response.TeamResponseDTO;
 import ma.youcode.majesticcup.entities.Team;
 import ma.youcode.majesticcup.services.TeamService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static ma.senane.utilities.response.Response.success;
 
 @RestController
 @RequestMapping("api/team")
-@RequiredArgsConstructor
-public class TeamController {
+public class TeamController extends GenericController<Team, TeamResponseDTO, TeamRequestDTO> {
 
     private final TeamService teamService;
-
-    @PostMapping("/new")
-    public ResponseEntity<SuccessDTO> handleCreate(@RequestBody @Validated(OnCreate.class) TeamRequestDTO dto){
-        TeamResponseDTO responseDTO = teamService.create(dto);
-        return success(201 , "Team created successfully." , "team" , responseDTO);
+    public TeamController(TeamService teamService) {
+        super(teamService, Team.class);
+        this.teamService = teamService;
     }
+
+//    @PostMapping("/new")
+//    public ResponseEntity<SuccessDTO> handleCreate(@RequestBody @Validated(OnCreate.class) TeamRequestDTO dto) {
+//        TeamResponseDTO responseDTO = teamService.create(dto);
+//        return success(201, "Team created successfully.", "team", responseDTO);
+//    }
+
+
 
 }

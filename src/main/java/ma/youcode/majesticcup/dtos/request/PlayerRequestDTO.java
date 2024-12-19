@@ -8,6 +8,6 @@ public record PlayerRequestDTO(
         @NotEmpty(groups = OnCreate.class) String name,
         @NotEmpty(groups = OnCreate.class) String surname,
         @NotEmpty(groups = OnCreate.class) String position,
-        @NotNull(groups = OnCreate.class) int number
+        @NotNull(groups = OnCreate.class) Integer number
 ) {
 }

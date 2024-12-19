@@ -4,6 +4,7 @@ public record PlayerResponseDTO(
         String id,
         String name,
         String surname,
-        String position
+        String position,
+        Integer number
 ) {
 }
