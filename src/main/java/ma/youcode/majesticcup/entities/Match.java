@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "matches")
@@ -16,5 +17,15 @@ public class Match {
 
     @Id
     private String id;
+
+    @DBRef
+    private Round round;
+
+    @DBRef
+    private Team homeTeam;
+
+    @DBRef
+    private Team awayTeam;
+
 
 }

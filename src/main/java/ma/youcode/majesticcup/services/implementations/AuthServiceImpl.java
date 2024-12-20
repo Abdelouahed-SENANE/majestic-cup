@@ -81,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
         User authUser = findByUsername(username);
         String token = jwtTokenProvider.generateToken(authUser);
         long expirationTime = jwtTokenProvider.getExpirationTime();
-        return new LoginResponseDTO(token, expirationTime);
+        return new LoginResponseDTO(token, expirationTime , authUser.getRoles());
     }
 
     @Override

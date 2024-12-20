@@ -5,6 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import ma.youcode.majesticcup.dtos.request.CompetitionRequestDTO;
 import ma.youcode.majesticcup.dtos.response.CompetitionResponseDTO;
 import ma.youcode.majesticcup.entities.Competition;
+import ma.youcode.majesticcup.entities.Round;
 import ma.youcode.majesticcup.entities.Team;
 import ma.youcode.majesticcup.repositories.CompetitionRepository;
 import ma.youcode.majesticcup.repositories.TeamRepository;
@@ -49,9 +50,10 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
     }
 
     @Override
-    public CompetitionResponseDTO addRoundsToCompetition(String id, List<String> roundIds) {
-
-        return null;
+    public void addRoundToCompetition(Competition competition,Round round) {
+        verifyRoundDuplication(competition , round.getRoundNumber());
+        competition.getRounds().add(round);
+        competitionRepository.save(competition);
     }
 
     @Override
@@ -92,6 +94,16 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
                             "%s team already exists in %s competition", team.getName(), competition.getName()));
                 });
 
+    }
+
+    private void verifyRoundDuplication(Competition competition , int roundNumber) {
+
+        competition.getRounds().stream()
+                .filter(round -> round.getRoundNumber() == roundNumber)
+                .findFirst()
+                .ifPresent(round -> {
+                    throw new EntityExistsException(String.format("Round %s already exists in %s competition", roundNumber, competition.getName()));
+                });
     }
 
 

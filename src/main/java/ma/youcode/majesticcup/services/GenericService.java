@@ -8,13 +8,9 @@ import java.util.List;
 
 public interface GenericService<T, RES, REQ> {
     Page<RES> readAll(Pageable pageable);
-
     List<RES> readAll();
-
      RES read(String id);
-
      void delete(String id);
-
     RES create(REQ req);
     RES update(String id,REQ req);
     T getById(String id);

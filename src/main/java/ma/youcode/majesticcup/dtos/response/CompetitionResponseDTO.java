@@ -1,5 +1,6 @@
 package ma.youcode.majesticcup.dtos.response;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ma.youcode.majesticcup.entities.Round;
 
 import java.util.List;
