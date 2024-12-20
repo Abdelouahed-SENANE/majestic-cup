@@ -2,6 +2,7 @@ package ma.youcode.majesticcup.controllers;
 
 import lombok.RequiredArgsConstructor;
 import ma.senane.utilities.dtos.SuccessDTO;
+import ma.senane.utilities.validation.groups.OnCreate;
 import ma.youcode.majesticcup.entities.Team;
 import ma.youcode.majesticcup.services.GenericService;
 import ma.youcode.majesticcup.services.TeamService;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static ma.senane.utilities.response.Response.success;
@@ -32,7 +34,7 @@ public abstract class GenericController<T ,RES , REQ> {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<SuccessDTO> handleCreate(@RequestBody REQ request) {
+    public ResponseEntity<SuccessDTO> handleCreate(@RequestBody @Validated(OnCreate.class) REQ request) {
         RES responseDTO =  genericService.create(request);
         return success(201, getClassName() +" created successfully.", getClassName().toLowerCase() ,responseDTO);
     }

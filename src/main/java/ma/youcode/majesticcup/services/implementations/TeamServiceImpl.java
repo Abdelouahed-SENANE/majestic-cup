@@ -19,10 +19,12 @@ import ma.youcode.majesticcup.services.TeamService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 @Service
+@Transactional
+
 public class TeamServiceImpl extends GenericServiceImpl<Team, TeamResponseDTO, TeamRequestDTO> implements TeamService {
     private static final Logger log = LogManager.getLogger(TeamServiceImpl.class);
     private final TeamRepository teamRepository;

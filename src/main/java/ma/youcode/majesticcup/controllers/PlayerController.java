@@ -32,4 +32,5 @@ public class PlayerController extends GenericController<Player, PlayerResponseDT
         return success(201 , "All players created successfully." , "newPlayers" , resDTO);
     }
 
+
 }

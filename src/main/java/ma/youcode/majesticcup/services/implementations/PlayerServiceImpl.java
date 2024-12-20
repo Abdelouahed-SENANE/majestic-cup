@@ -10,21 +10,22 @@ import ma.youcode.majesticcup.services.PlayerService;
 import ma.youcode.majesticcup.services.TeamService;
 import ma.youcode.majesticcup.utils.mappers.PlayerMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class PlayerServiceImpl extends GenericServiceImpl<Player, PlayerResponseDTO , PlayerRequestDTO> implements PlayerService  {
 
     private final PlayerRepository playerRepository;
     private final PlayerMapper playerMapper;
-    private final TeamService teamService;
-    public PlayerServiceImpl(PlayerRepository playerRepository, PlayerMapper playerMapper, TeamService teamService) {
+    public PlayerServiceImpl(PlayerRepository playerRepository, PlayerMapper playerMapper) {
         super(playerRepository, playerMapper , Player.class);
         this.playerRepository = playerRepository;
         this.playerMapper = playerMapper;
-        this.teamService = teamService;
+
     }
 
     @Override
