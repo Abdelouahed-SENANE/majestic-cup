@@ -10,5 +10,4 @@ public record UserRequestDTO(
         String username,
         String password,
         Set<RoleName> roles
-) implements Serializable {
-}
+) implements Serializable {}

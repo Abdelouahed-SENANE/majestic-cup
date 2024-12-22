@@ -1,7 +1,7 @@
 package ma.youcode.majesticcup.controllers;
 
 
-import ma.senane.utilities.dtos.SuccessDTO;
+import org.starter.utilities.dtos.SuccessDTO;
 import ma.youcode.majesticcup.dtos.request.MatchRequestDTO;
 import ma.youcode.majesticcup.dtos.request.ResultRequestDTO;
 import ma.youcode.majesticcup.dtos.response.MatchResponseDTO;
@@ -11,7 +11,7 @@ import ma.youcode.majesticcup.services.ResultService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static ma.senane.utilities.response.Response.success;
+import static org.starter.utilities.response.Response.success;
 
 
 @RestController

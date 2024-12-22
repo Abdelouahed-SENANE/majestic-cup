@@ -1,14 +1,11 @@
 package ma.youcode.majesticcup.services.implementations;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.Transient;
-import lombok.Builder;
+
 import lombok.RequiredArgsConstructor;
-import ma.senane.utilities.mappers.GenericMapper;
+import org.starter.utilities.mappers.GenericMapper;
 import ma.youcode.majesticcup.exceptions.custom.NoContentException;
 import ma.youcode.majesticcup.services.GenericService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

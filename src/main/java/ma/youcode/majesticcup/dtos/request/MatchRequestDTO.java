@@ -1,7 +1,7 @@
 package ma.youcode.majesticcup.dtos.request;
 
 import jakarta.validation.constraints.NotNull;
-import ma.senane.utilities.validation.groups.OnCreate;
+import org.starter.utilities.validation.groups.OnCreate;
 
 public record MatchRequestDTO(
         @NotNull(groups = OnCreate.class) String roundId,

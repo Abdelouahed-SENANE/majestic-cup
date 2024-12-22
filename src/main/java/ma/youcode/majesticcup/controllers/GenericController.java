@@ -1,11 +1,9 @@
 package ma.youcode.majesticcup.controllers;
 
 import lombok.RequiredArgsConstructor;
-import ma.senane.utilities.dtos.SuccessDTO;
-import ma.senane.utilities.validation.groups.OnCreate;
-import ma.youcode.majesticcup.entities.Team;
+import org.starter.utilities.dtos.SuccessDTO;
+import org.starter.utilities.validation.groups.OnCreate;
 import ma.youcode.majesticcup.services.GenericService;
-import ma.youcode.majesticcup.services.TeamService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static ma.senane.utilities.response.Response.success;
+import static org.starter.utilities.response.Response.success;
 
 @RequiredArgsConstructor
 public abstract class GenericController<T ,RES , REQ> {

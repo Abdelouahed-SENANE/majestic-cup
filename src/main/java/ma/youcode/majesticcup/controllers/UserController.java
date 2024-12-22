@@ -1,7 +1,7 @@
 package ma.youcode.majesticcup.controllers;
 
 import lombok.RequiredArgsConstructor;
-import ma.senane.utilities.dtos.SuccessDTO;
+import org.starter.utilities.dtos.SuccessDTO;
 import ma.youcode.majesticcup.entities.User;
 import ma.youcode.majesticcup.services.UserService;
 import ma.youcode.majesticcup.utils.enums.RoleName;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
-import static ma.senane.utilities.response.Response.success;
+import static org.starter.utilities.response.Response.success;
 
 @RequiredArgsConstructor
 @RestController

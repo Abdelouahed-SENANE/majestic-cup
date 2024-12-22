@@ -1,6 +1,6 @@
 package ma.youcode.majesticcup.utils.mappers;
 
-import ma.senane.utilities.mappers.GenericMapper;
+import org.starter.utilities.mappers.GenericMapper;
 import ma.youcode.majesticcup.dtos.request.ResultRequestDTO;
 import ma.youcode.majesticcup.dtos.response.ResultResponseDTO;
 import ma.youcode.majesticcup.entities.Result;

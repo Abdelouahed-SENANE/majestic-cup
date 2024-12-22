@@ -71,7 +71,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.senane</groupId>
+            <groupId>org.starter</groupId>
             <artifactId>utilities</artifactId>
             <version>1.0</version>
         </dependency>

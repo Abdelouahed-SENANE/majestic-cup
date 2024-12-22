@@ -2,17 +2,16 @@ package ma.youcode.majesticcup.controllers;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import ma.senane.utilities.dtos.SuccessDTO;
+import org.starter.utilities.dtos.SuccessDTO;
 import ma.youcode.majesticcup.dtos.request.LoginRequestDTO;
 import ma.youcode.majesticcup.dtos.request.UserRequestDTO;
 import ma.youcode.majesticcup.dtos.response.LoginResponseDTO;
 import ma.youcode.majesticcup.services.AuthService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static ma.senane.utilities.response.Response.success;
+import static org.starter.utilities.response.Response.success;
+
 
 @RestController
 @RequiredArgsConstructor

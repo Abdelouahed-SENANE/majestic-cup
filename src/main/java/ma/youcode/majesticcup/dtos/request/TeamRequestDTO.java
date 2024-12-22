@@ -2,7 +2,7 @@ package ma.youcode.majesticcup.dtos.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import ma.senane.utilities.validation.groups.OnCreate;
+import org.starter.utilities.validation.groups.OnCreate;
 import ma.youcode.majesticcup.dtos.response.PlayerResponseDTO;
 
 import java.util.List;

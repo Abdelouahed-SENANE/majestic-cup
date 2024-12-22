@@ -1,28 +1,26 @@
 package ma.youcode.majesticcup.exceptions;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import ma.senane.utilities.dtos.ErrorDTO;
-import ma.senane.utilities.exceptions.AbstractGlobalHandlerException;
+import org.starter.utilities.dtos.ErrorDTO;
 import ma.youcode.majesticcup.exceptions.custom.NoContentException;
 import ma.youcode.majesticcup.exceptions.custom.TeamSizePlayersException;
 import ma.youcode.majesticcup.exceptions.custom.UserAlreadyExistsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.starter.utilities.exceptions.AbstractGlobalExceptionHandler;
 
 
-import static ma.senane.utilities.response.Response.error;
+import static org.starter.utilities.response.Response.error;
 
 @RestControllerAdvice
-public class GlobalHandlerException extends AbstractGlobalHandlerException {
+public class GlobalHandlerException extends AbstractGlobalExceptionHandler {
 
     private static final Logger log = LogManager.getLogger(GlobalHandlerException.class);
 

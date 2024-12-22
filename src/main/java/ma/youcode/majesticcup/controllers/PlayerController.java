@@ -1,7 +1,7 @@
 package ma.youcode.majesticcup.controllers;
 
 import lombok.RequiredArgsConstructor;
-import ma.senane.utilities.dtos.SuccessDTO;
+import org.starter.utilities.dtos.SuccessDTO;
 import ma.youcode.majesticcup.dtos.request.PlayerRequestDTO;
 import ma.youcode.majesticcup.dtos.response.PlayerResponseDTO;
 import ma.youcode.majesticcup.entities.Player;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static ma.senane.utilities.response.Response.success;
+import static org.starter.utilities.response.Response.success;
 
 @RestController
 @RequestMapping("api/admin/player")

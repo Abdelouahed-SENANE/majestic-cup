@@ -18,5 +18,6 @@ logging:
   level:
     org:
       springframework:
-        security: TRACE
-        web: TRACE
+        security: trace
+    ma: debug
+    web: trace
