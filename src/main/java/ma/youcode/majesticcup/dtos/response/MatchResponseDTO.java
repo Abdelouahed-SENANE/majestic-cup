@@ -1,6 +1,11 @@
 package ma.youcode.majesticcup.dtos.response;
 
+import ma.youcode.majesticcup.entities.Team;
+
 public record MatchResponseDTO(
-        String id
+        String id,
+        TeamResponseDTO homeTeam,
+        TeamResponseDTO awayTeam,
+        ResultResponseDTO result
 ) {
 }

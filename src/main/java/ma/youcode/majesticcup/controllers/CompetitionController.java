@@ -14,7 +14,7 @@ import java.util.List;
 import static ma.senane.utilities.response.Response.success;
 
 @RestController
-@RequestMapping("api/competition")
+@RequestMapping("api/admin/competition")
 public class CompetitionController extends GenericController<Competition, CompetitionResponseDTO, CompetitionRequestDTO> {
     private final CompetitionService competitionService;
     public CompetitionController(CompetitionService competitionService) {

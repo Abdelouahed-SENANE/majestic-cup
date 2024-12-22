@@ -17,7 +17,7 @@ import java.util.List;
 import static ma.senane.utilities.response.Response.success;
 
 @RestController
-@RequestMapping("api/player")
+@RequestMapping("api/admin/player")
 public class PlayerController extends GenericController<Player, PlayerResponseDTO , PlayerRequestDTO> {
 
     private final PlayerService playerService;

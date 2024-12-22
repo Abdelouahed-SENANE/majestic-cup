@@ -19,7 +19,7 @@ import java.util.List;
 import static ma.senane.utilities.response.Response.success;
 
 @RestController
-@RequestMapping("api/team")
+@RequestMapping("api/admin/team")
 public class TeamController extends GenericController<Team, TeamResponseDTO, TeamRequestDTO> {
 
     private final TeamService teamService;

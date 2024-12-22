@@ -27,5 +27,9 @@ public class Match {
     @DBRef
     private Team awayTeam;
 
+    @DBRef
+    private Result result;
+
+
 
 }

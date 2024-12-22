@@ -4,9 +4,10 @@ import ma.youcode.majesticcup.dtos.request.MatchRequestDTO;
 import ma.youcode.majesticcup.dtos.request.ResultRequestDTO;
 import ma.youcode.majesticcup.dtos.response.MatchResponseDTO;
 import ma.youcode.majesticcup.entities.Match;
+import ma.youcode.majesticcup.entities.Result;
 
 
-public interface MatchService extends GenericService<Match, MatchResponseDTO, MatchRequestDTO>{
+public interface ResultService {
 
-    MatchResponseDTO addResult(ResultRequestDTO dto , String id);
+    Result createResult(ResultRequestDTO resultRequestDTO , Match match);
 }

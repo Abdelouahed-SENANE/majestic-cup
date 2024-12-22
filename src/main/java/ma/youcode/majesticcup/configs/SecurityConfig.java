@@ -27,13 +27,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .addFilterBefore(jwtAuthFilter , UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/user/me").authenticated()
-                        .requestMatchers("/api/user/**").hasRole( "ADMIN")
-                        .requestMatchers("/api/team/**").hasRole( "ADMIN")
+                        .requestMatchers("/api/admin/user/me").hasAnyRole("OPERATOR", "USER", "ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/match/{id}/result").hasRole("OPERATOR")
                         .anyRequest()
                         .authenticated()
                 )
@@ -43,6 +43,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();

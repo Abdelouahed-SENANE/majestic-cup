@@ -15,13 +15,13 @@ import static ma.senane.utilities.response.Response.success;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/admin/user")
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping("/me")
-    public ResponseEntity<SuccessDTO> hello() {
+    public ResponseEntity<SuccessDTO> getMe() {
         return success(200 , "Authenticated user." , "me" , userService.getMe());
     }
     @GetMapping("/all")

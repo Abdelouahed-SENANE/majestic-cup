@@ -19,8 +19,4 @@ logging:
     org:
       springframework:
         security: TRACE
-    ma:
-      youcode:
-        majesticcup:
-          filters:
-            JwtAuthFilter: DEBUG
+        web: TRACE

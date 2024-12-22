@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("api/round")
+@RequestMapping("api/admin/round")
 public class RoundController extends GenericController<Round, RoundResponseDTO, RoundRequestDTO> {
     private final RoundService roundService;
     public RoundController(RoundService roundService) {
