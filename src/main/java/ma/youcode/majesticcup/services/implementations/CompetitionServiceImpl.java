@@ -8,13 +8,16 @@ import ma.youcode.majesticcup.entities.Competition;
 import ma.youcode.majesticcup.entities.Round;
 import ma.youcode.majesticcup.entities.Team;
 import ma.youcode.majesticcup.repositories.CompetitionRepository;
+import ma.youcode.majesticcup.repositories.RoundRepository;
 import ma.youcode.majesticcup.repositories.TeamRepository;
 import ma.youcode.majesticcup.services.CompetitionService;
+import ma.youcode.majesticcup.services.RoundService;
 import ma.youcode.majesticcup.utils.mappers.CompetitionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,12 +28,14 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
     private final CompetitionRepository competitionRepository;
     private final CompetitionMapper competitionMapper;
     private final TeamRepository teamRepository;
+    private final RoundService roundService;
 
-    public CompetitionServiceImpl(CompetitionRepository competitionRepository, CompetitionMapper competitionMapper, TeamRepository teamRepository) {
+    public CompetitionServiceImpl(CompetitionRepository competitionRepository, RoundService roundService, CompetitionMapper competitionMapper, TeamRepository teamRepository) {
         super(competitionRepository, competitionMapper, Competition.class);
         this.competitionRepository = competitionRepository;
         this.competitionMapper = competitionMapper;
         this.teamRepository = teamRepository;
+        this.roundService = roundService;
     }
 
     @Override
@@ -38,9 +43,11 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
 
         Competition competition = competitionMapper.fromRequestDTO(competitionRequestDTO);
         competition.setTeams(new ArrayList<>());
-        competition.setRounds(new ArrayList<>());
         competition.setCurrentRound(1);
-        return competitionMapper.toResponseDTO(competitionRepository.save(competition));
+        Competition saved = competitionRepository.save(competition);
+        List<Round> savedRounds = createRoundsForCompetition(saved);
+        saved.setRounds(savedRounds);
+        return competitionMapper.toResponseDTO(saved);
 
     }
 
@@ -49,11 +56,26 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
         return null;
     }
 
-    @Override
-    public void addRoundToCompetition(Competition competition,Round round) {
-        verifyRoundDuplication(competition , round.getRoundNumber());
-        competition.getRounds().add(round);
-        competitionRepository.save(competition);
+    private List<Round> createRoundsForCompetition(Competition competition) {
+        List<Round> rounds = new ArrayList<>();
+        int numberOfRounds = switch (competition.getNumberOfTeams()) {
+            case 4 -> 2;
+            case 8 -> 4;
+            case 16 -> 8;
+            case 32 -> 16;
+            case 64 -> 32;
+            default -> throw new IllegalArgumentException("Invalid number of teams: " + competition.getNumberOfTeams());
+        };
+        for (int i = 0; i < numberOfRounds; i++) {
+            Round round = Round.builder()
+                    .competition(competition)
+                    .roundNumber(i+1)
+                    .matches(new ArrayList<>())
+                    .build();
+            rounds.add(round);
+        }
+
+        return roundService.createAll(rounds);
     }
 
     @Override
@@ -79,11 +101,11 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
         return Math.max(0, competition.getNumberOfTeams() - competition.getTeams().size());
     }
 
-    private void ensureTeamRulesInCompetition(Competition competition , List<Team> teams ) {
+    private void ensureTeamRulesInCompetition(Competition competition, List<Team> teams) {
         int availablePlaceTeam = calculateAvailableTeamSlots(competition);
 
         if (teams.size() > availablePlaceTeam) {
-            throw new IllegalArgumentException(String.format("The number of place exist in this competition is %s place" , availablePlaceTeam));
+            throw new IllegalArgumentException(String.format("The number of place exist in this competition is %s place", availablePlaceTeam));
         }
 
         teams.stream()
@@ -96,15 +118,15 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
 
     }
 
-    private void verifyRoundDuplication(Competition competition , int roundNumber) {
-
-        competition.getRounds().stream()
-                .filter(round -> round.getRoundNumber() == roundNumber)
-                .findFirst()
-                .ifPresent(round -> {
-                    throw new EntityExistsException(String.format("Round %s already exists in %s competition", roundNumber, competition.getName()));
-                });
-    }
+//    private void verifyRoundDuplication(Competition competition , int roundNumber) {
+//
+//        competition.getRounds().stream()
+//                .filter(round -> round.getRoundNumber() == roundNumber)
+//                .findFirst()
+//                .ifPresent(round -> {
+//                    throw new EntityExistsException(String.format("Round %s already exists in %s competition", roundNumber, competition.getName()));
+//                });
+//    }
 
 
 }

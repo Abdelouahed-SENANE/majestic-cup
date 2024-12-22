@@ -11,4 +11,5 @@ import java.util.List;
 
 
 public interface RoundService extends GenericService<Round, RoundResponseDTO, RoundRequestDTO>{
+    List<Round> createAll(List<Round> rounds);
 }

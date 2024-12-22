@@ -11,6 +11,5 @@ import java.util.List;
 public interface CompetitionService extends GenericService<Competition , CompetitionResponseDTO , CompetitionRequestDTO>{
 
     CompetitionResponseDTO addTeamsToCompetition(String id,CompetitionRequestDTO dto);
-    void addRoundToCompetition(Competition competition,Round round);
 
 }
