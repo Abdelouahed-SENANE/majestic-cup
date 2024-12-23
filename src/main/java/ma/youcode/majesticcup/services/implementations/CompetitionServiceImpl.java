@@ -118,15 +118,6 @@ public class CompetitionServiceImpl extends GenericServiceImpl<Competition, Comp
 
     }
 
-//    private void verifyRoundDuplication(Competition competition , int roundNumber) {
-//
-//        competition.getRounds().stream()
-//                .filter(round -> round.getRoundNumber() == roundNumber)
-//                .findFirst()
-//                .ifPresent(round -> {
-//                    throw new EntityExistsException(String.format("Round %s already exists in %s competition", roundNumber, competition.getName()));
-//                });
-//    }
 
 
 }

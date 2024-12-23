@@ -10,7 +10,6 @@ public record CompetitionRequestDTO(
         @NotEmpty(groups = OnCreate.class) String name,
         @NotNull(groups = OnCreate.class)
         Integer numberOfTeams,
-
         Integer currentRound,
         List<String> teamIds,
         List<String> roundIds

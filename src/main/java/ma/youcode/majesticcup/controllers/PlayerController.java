@@ -1,16 +1,14 @@
 package ma.youcode.majesticcup.controllers;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import org.starter.utilities.dtos.SuccessDTO;
 import ma.youcode.majesticcup.dtos.request.PlayerRequestDTO;
 import ma.youcode.majesticcup.dtos.response.PlayerResponseDTO;
 import ma.youcode.majesticcup.entities.Player;
 import ma.youcode.majesticcup.services.PlayerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -32,5 +30,9 @@ public class PlayerController extends GenericController<Player, PlayerResponseDT
         return success(201 , "All players created successfully." , "newPlayers" , resDTO);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<SuccessDTO> handleGetAll(){
+        return success(200 , "Get all players successfully" , "players" , playerService.readAll());
+    }
 
 }
